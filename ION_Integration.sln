@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ION_Integration", "ION_Integration\ION_Integration.dtproj", "{01607518-8BA1-41A3-8AFF-B118F90405CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01607518-8BA1-41A3-8AFF-B118F90405CB}.Development|Default.ActiveCfg = Development
+		{01607518-8BA1-41A3-8AFF-B118F90405CB}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0CA5E8F6-A57B-4EA0-BF2E-34EEF3526769}
+	EndGlobalSection
+EndGlobal

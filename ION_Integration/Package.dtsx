@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/22/2020 4:29:58 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="CRONOS"
+  DTS:CreatorName="CRONOS\Administrador"
+  DTS:DTSID="{72E38B56-B1CB-4E1D-AE9D-6F059D137AF4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1301.433"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionGUID="{F580D256-A3FA-41F8-9F0B-7297D4CC0EF0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables />
+</DTS:Executable>
