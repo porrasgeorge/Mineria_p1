@@ -11,12 +11,28 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="39"
-  DTS:VersionGUID="{27A27F8D-17E2-4256-81BF-3D4AAC92C933}">
+  DTS:VersionBuild="42"
+  DTS:VersionGUID="{A31961CE-4C15-465A-B724-FC068315B385}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{4EA5F38C-31C2-4644-96F8-578D05AD6879}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Tables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Dates];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Cause];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_CauseValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Effect];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_EffectValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Source];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Fact_EventLog2];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Dim_Cause Table"
       DTS:CreationName="Microsoft.Pipeline"
@@ -2358,19 +2374,34 @@ where [refTable].[ID] = ?</property>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Truncate Tables"
+      DTS:refId="Package\Fact_EventLog2 Create"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{4EA5F38C-31C2-4644-96F8-578D05AD6879}"
+      DTS:DTSID="{F7CD13D7-739D-4401-B7FA-D04CB9B0303E}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Truncate Tables"
+      DTS:ObjectName="Fact_EventLog2 Create"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="truncate table [ION_DW].dbo.[Dim_Dates];&#xA;truncate table [ION_DW].dbo.[Dim_Cause];&#xA;truncate table [ION_DW].dbo.[Dim_CauseValue];&#xA;truncate table [ION_DW].dbo.[Dim_Effect];&#xA;truncate table [ION_DW].dbo.[Dim_EffectValue];&#xA;truncate table [ION_DW].dbo.[Dim_Source];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="&#xA;CREATE TABLE [ION_DW].[dbo].[Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[SourceID] [int] NOT NULL,&#xA;&#x9;[DateID] [INT] NOT NULL,&#xA;&#x9;[CauseID] [int] NULL,&#xA;&#x9;[CauseValueID] [int] NULL,&#xA;&#x9;[EffectID] [int] NULL,&#xA;&#x9;[EffectValueID] [int] NULL,&#xA;&#x9;[Event_ID] INT NOT NULL,&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Fact_EventLog2 Table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Tarea Flujo de datos"
+      DTS:DTSID="{549B737C-DDD4-41B2-A003-3886B119B340}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Fact_EventLog2 Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -2419,10 +2450,26 @@ where [refTable].[ID] = ?</property>
       DTS:refId="Package.PrecedenceConstraints[Restricción 4]"
       DTS:CreationName=""
       DTS:DTSID="{EDB2B3DD-71EA-4D2B-BAD1-83A62AE34512}"
-      DTS:From="Package\Truncate Tables"
+      DTS:From="Package\Delete Tables"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 4"
       DTS:To="Package\Dim_Date" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{3F7DE06C-7144-4DC8-A80B-DEAF5B1828AF}"
+      DTS:From="Package\Dim_EffectValue Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 5"
+      DTS:To="Package\Fact_EventLog2 Create" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{A23D827A-EC51-416A-B26B-A08108143E57}"
+      DTS:From="Package\Fact_EventLog2 Create"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 6"
+      DTS:To="Package\Fact_EventLog2 Table" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
@@ -2435,7 +2482,7 @@ where [refTable].[ID] = ?</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="161,42"
           Id="Package\Dim_Cause Table"
@@ -2455,7 +2502,7 @@ where [refTable].[ID] = ?</property>
         <NodeLayout
           Size="185,42"
           Id="Package\Dim_EffectValue Table"
-          TopLeft="33,654" />
+          TopLeft="19,656" />
         <NodeLayout
           Size="165,42"
           Id="Package\Dim_Source Table"
@@ -2528,30 +2575,18 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 2 1]"
-          TopLeft="113.5,588">
+          TopLeft="112.5,588">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="12,66"
+              EndConnector="0,68"
               Start="0,0"
-              End="12,58.5">
+              End="0,60.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,29"
-                    Point2="0,33"
-                    Point3="4,33" />
-                  <mssgle:LineSegment
-                    End="8,33" />
-                  <mssgle:CubicBezierSegment
-                    Point1="8,33"
-                    Point2="12,33"
-                    Point3="12,37" />
-                  <mssgle:LineSegment
-                    End="12,58.5" />
+                    End="0,60.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2583,12 +2618,64 @@ where [refTable].[ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="155,42"
-          Id="Package\Truncate Tables"
+          Size="143,42"
+          Id="Package\Delete Tables"
           TopLeft="35,48" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 4]"
-          TopLeft="111.5,90">
+          TopLeft="108.5,90">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Fact_EventLog2 Table"
+          TopLeft="19,826" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\Fact_EventLog2 Create"
+          TopLeft="21,736" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 5]"
+          TopLeft="113.25,698">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 6]"
+          TopLeft="112.75,778">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
