@@ -11,20 +11,36 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="42"
-  DTS:VersionGUID="{A31961CE-4C15-465A-B724-FC068315B385}">
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{69D4E584-B4B2-4FFA-B52D-7841822D9BB6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\Delete Tables"
+      DTS:refId="Package\Create All Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{cd336c64-1ba2-4087-9359-916125614427}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create All Tables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
+          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;CREATE TABLE [Dim_Source] (&#xA;    [ID] INT PRIMARY KEY,&#xA;    [Cooperative] NVARCHAR(250),&#xA;    [MeterName] NVARCHAR(250)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Cause] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_CauseValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_Effect] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_EffectValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;CREATE TABLE [Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[SourceID] [int] NOT NULL,&#xA;&#x9;[DateID] [INT] NOT NULL,&#xA;&#x9;[CauseID] [int] NULL,&#xA;&#x9;[CauseValueID] [int] NULL,&#xA;&#x9;[EffectID] [int] NULL,&#xA;&#x9;[EffectValueID] [int] NULL,&#xA;&#x9;[Event_ID] INT NOT NULL,&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Delete All Tables"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
       DTS:DTSID="{4EA5F38C-31C2-4644-96F8-578D05AD6879}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Delete Tables"
+      DTS:ObjectName="Delete All Tables"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -970,7 +986,7 @@ where [refTable].[ID] = ?</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="BEGIN&#xA;USE ION_DW&#xA;-----------------------------------------------------------------------------------------&#xA;--Para llenar la tabla de fechas&#xA;&#xA;IF OBJECT_ID('dbo.Dim_Dates', 'U') IS NOT NULL &#xA;  DROP TABLE dbo.Dim_Dates;&#xA;&#xA;--TRUNCATE TABLE dbo.Dim_Dates&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;DECLARE @FEC_INI AS DATE;&#xA;DECLARE @FEC_FIN AS DATE;&#xA;&#xA;SET @FEC_INI = '2015-01-01';&#xA;SET @FEC_FIN = '2020-12-31';&#xA;&#xA;WHILE @FEC_INI&lt;=@FEC_FIN&#xA;&#x9;BEGIN&#xA;&#x9;INSERT INTO Dim_Dates([Date],&#xA;&#x9;&#x9;[Year] ,&#xA;&#x9;&#x9;[Month] ,&#xA;&#x9;&#x9;[Day] ,&#xA;&#x9;&#x9;[MonthName],&#xA;&#x9;&#x9;[DayName]) &#xA;&#x9;SELECT @FEC_INI,&#xA;&#x9;&#x9;DATEPART(YEAR,@FEC_INI),&#xA;&#x9;&#x9;DATEPART(MONTH,@FEC_INI),&#xA;&#x9;&#x9;DATEPART(DAY,@FEC_INI),&#xA;&#x9;&#x9;DATENAME(mm,@FEC_INI),&#xA;&#x9;&#x9;DATENAME(dw,@FEC_INI) &#xA;&#x9;SET @FEC_INI = DATEADD(DAY, 1, @FEC_INI)&#xA;&#x9;END&#xA;END ;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="BEGIN&#xA;USE ION_DW&#xA;-----------------------------------------------------------------------------------------&#xA;--Para llenar la tabla de fechas&#xA;&#xA;DECLARE @FEC_INI AS DATE;&#xA;DECLARE @FEC_FIN AS DATE;&#xA;&#xA;SET @FEC_INI = '2015-01-01';&#xA;SET @FEC_FIN = '2020-12-31';&#xA;&#xA;WHILE @FEC_INI&lt;=@FEC_FIN&#xA;&#x9;BEGIN&#xA;&#x9;INSERT INTO Dim_Dates([Date],&#xA;&#x9;&#x9;[Year] ,&#xA;&#x9;&#x9;[Month] ,&#xA;&#x9;&#x9;[Day] ,&#xA;&#x9;&#x9;[MonthName],&#xA;&#x9;&#x9;[DayName]) &#xA;&#x9;SELECT @FEC_INI,&#xA;&#x9;&#x9;DATEPART(YEAR,@FEC_INI),&#xA;&#x9;&#x9;DATEPART(MONTH,@FEC_INI),&#xA;&#x9;&#x9;DATEPART(DAY,@FEC_INI),&#xA;&#x9;&#x9;DATENAME(mm,@FEC_INI),&#xA;&#x9;&#x9;DATENAME(dw,@FEC_INI) &#xA;&#x9;SET @FEC_INI = DATEADD(DAY, 1, @FEC_INI)&#xA;&#x9;END&#xA;END ;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1912,11 +1928,11 @@ where [refTable].[ID] = ?</property>
           version="1">
           <components>
             <component
-              refId="Package\Dim_Source Table\Búsqueda"
+              refId="Package\Dim_Source Table\Dim_Source Lookup"
               componentClassID="Microsoft.Lookup"
               contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
               description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
-              name="Búsqueda"
+              name="Dim_Source Lookup"
               usesDispositions="true"
               version="6">
               <properties>
@@ -1980,7 +1996,7 @@ where [refTable].[ID] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Dim_Source Table\Búsqueda.Connections[OleDbConnection]"
+                  refId="Package\Dim_Source Table\Dim_Source Lookup.Connections[OleDbConnection]"
                   connectionManagerID="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}:external"
                   connectionManagerRefId="Project.ConnectionManagers[ION_DW]"
                   description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
@@ -1988,11 +2004,11 @@ where [refTable].[ID] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda]"
+                  refId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda]"
                   name="Entrada de búsqueda">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda].Columns[ID]"
+                      refId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda].Columns[ID]"
                       cachedDataType="i4"
                       cachedName="ID"
                       lineageId="Package\Dim_Source Table\Source Table Read.Outputs[Salida de origen de OLE DB].Columns[ID]">
@@ -2013,17 +2029,17 @@ where [refTable].[ID] = ?</property>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de entradas coincidentes de búsqueda]"
                   errorOrTruncationOperation="Búsqueda"
                   exclusionGroup="1"
                   name="Salida de entradas coincidentes de búsqueda"
-                  synchronousInputId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ID]"
+                      refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ID]"
                       dataType="i4"
                       errorOrTruncationOperation="Copiar columna"
-                      lineageId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ID]"
+                      lineageId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ID]"
                       name="ID"
                       truncationRowDisposition="FailComponent">
                       <properties>
@@ -2037,30 +2053,30 @@ where [refTable].[ID] = ?</property>
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de entradas no coincidentes de búsqueda]"
                   description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
                   exclusionGroup="1"
                   name="Salida de entradas no coincidentes de búsqueda"
-                  synchronousInputId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de error de búsqueda]"
+                  refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de error de búsqueda]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Salida de error de búsqueda"
-                  synchronousInputId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      lineageId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      refId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      lineageId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -2363,30 +2379,14 @@ where [refTable].[ID] = ?</property>
               refId="Package\Dim_Source Table.Paths[Salida de entradas no coincidentes de búsqueda]"
               endId="Package\Dim_Source Table\Dim_Source Table Write.Inputs[Entrada de destino de OLE DB]"
               name="Salida de entradas no coincidentes de búsqueda"
-              startId="Package\Dim_Source Table\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]" />
+              startId="Package\Dim_Source Table\Dim_Source Lookup.Outputs[Salida de entradas no coincidentes de búsqueda]" />
             <path
               refId="Package\Dim_Source Table.Paths[Salida de origen de OLE DB]"
-              endId="Package\Dim_Source Table\Búsqueda.Inputs[Entrada de búsqueda]"
+              endId="Package\Dim_Source Table\Dim_Source Lookup.Inputs[Entrada de búsqueda]"
               name="Salida de origen de OLE DB"
               startId="Package\Dim_Source Table\Source Table Read.Outputs[Salida de origen de OLE DB]" />
           </paths>
         </pipeline>
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Fact_EventLog2 Create"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{F7CD13D7-739D-4401-B7FA-D04CB9B0303E}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Fact_EventLog2 Create"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="&#xA;CREATE TABLE [ION_DW].[dbo].[Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[SourceID] [int] NOT NULL,&#xA;&#x9;[DateID] [INT] NOT NULL,&#xA;&#x9;[CauseID] [int] NULL,&#xA;&#x9;[CauseValueID] [int] NULL,&#xA;&#x9;[EffectID] [int] NULL,&#xA;&#x9;[EffectValueID] [int] NULL,&#xA;&#x9;[Event_ID] INT NOT NULL,&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -2449,27 +2449,27 @@ where [refTable].[ID] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 4]"
       DTS:CreationName=""
-      DTS:DTSID="{EDB2B3DD-71EA-4D2B-BAD1-83A62AE34512}"
-      DTS:From="Package\Delete Tables"
+      DTS:DTSID="{215EE3B1-65A3-4004-91BC-2C1BDD6FD98C}"
+      DTS:From="Package\Create All Tables"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 4"
       DTS:To="Package\Dim_Date" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 5]"
       DTS:CreationName=""
-      DTS:DTSID="{3F7DE06C-7144-4DC8-A80B-DEAF5B1828AF}"
+      DTS:DTSID="{254A3FBB-2151-44B3-A28A-64464A24B90D}"
       DTS:From="Package\Dim_EffectValue Table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 5"
-      DTS:To="Package\Fact_EventLog2 Create" />
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Restricción 6]"
-      DTS:CreationName=""
-      DTS:DTSID="{A23D827A-EC51-416A-B26B-A08108143E57}"
-      DTS:From="Package\Fact_EventLog2 Create"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Restricción 6"
       DTS:To="Package\Fact_EventLog2 Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{EF102010-BDB9-4CBA-B64D-4ABAD1FF0336}"
+      DTS:From="Package\Delete All Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 7"
+      DTS:To="Package\Create All Tables" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
@@ -2484,43 +2484,51 @@ where [refTable].[ID] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="158,42"
+          Id="Package\Delete All Tables"
+          TopLeft="35,48" />
+        <NodeLayout
           Size="161,42"
           Id="Package\Dim_Cause Table"
-          TopLeft="32,338" />
+          TopLeft="740.75,134.25" />
         <NodeLayout
           Size="171,44"
           Id="Package\Dim_CauseValue Table"
-          TopLeft="27,436" />
+          TopLeft="36.25,233.25" />
         <NodeLayout
           Size="125,42"
           Id="Package\Dim_Date"
-          TopLeft="48,138" />
+          TopLeft="271.75,133" />
         <NodeLayout
           Size="159,42"
           Id="Package\Dim_Effect Table"
-          TopLeft="34,546" />
+          TopLeft="254.5,228.25" />
         <NodeLayout
           Size="185,42"
           Id="Package\Dim_EffectValue Table"
-          TopLeft="19,656" />
+          TopLeft="482,225.75" />
         <NodeLayout
           Size="165,42"
           Id="Package\Dim_Source Table"
-          TopLeft="26,248" />
+          TopLeft="488.5,134.25" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Fact_EventLog2 Table"
+          TopLeft="735.25,222.25" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
-          TopLeft="109.5,180">
+          TopLeft="396.75,154.625">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,68"
+              EndConnector="91.75,0"
               Start="0,0"
-              End="0,60.5">
+              End="84.25,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,60.5" />
+                    End="84.25,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2531,18 +2539,18 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 1]"
-          TopLeft="110.5,290">
+          TopLeft="653.5,155.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48"
+              EndConnector="87.25,0"
               Start="0,0"
-              End="0,40.5">
+              End="79.75,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.5" />
+                    End="79.75,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2553,18 +2561,30 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 2]"
-          TopLeft="112.5,380">
+          TopLeft="821.25,176.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,56"
+              EndConnector="-699.5,57"
               Start="0,0"
-              End="0,48.5">
+              End="-699.5,49.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,48.5" />
+                    End="0,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5"
+                    Point2="0,28.5"
+                    Point3="-4,28.5" />
+                  <mssgle:LineSegment
+                    End="-695.5,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-695.5,28.5"
+                    Point2="-699.5,28.5"
+                    Point3="-699.5,32.5" />
+                  <mssgle:LineSegment
+                    End="-699.5,49.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2575,18 +2595,18 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 2 1]"
-          TopLeft="112.5,588">
+          TopLeft="413.5,248">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,68"
+              EndConnector="68.5,0"
               Start="0,0"
-              End="0,60.5">
+              End="61,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,60.5" />
+                    End="61,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2597,18 +2617,18 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 3]"
-          TopLeft="113,480">
+          TopLeft="207.25,252.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,66"
+              EndConnector="47.25,0"
               Start="0,0"
-              End="0,58.5">
+              End="39.75,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,58.5" />
+                    End="39.75,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2618,23 +2638,23 @@ where [refTable].[ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="143,42"
-          Id="Package\Delete Tables"
-          TopLeft="35,48" />
+          Size="158,42"
+          Id="Package\Create All Tables"
+          TopLeft="39.1785714285714,132.821428571429" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 4]"
-          TopLeft="108.5,90">
+          TopLeft="197.178571428571,153.910714285714">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48"
+              EndConnector="74.5714285714286,0"
               Start="0,0"
-              End="0,40.5">
+              End="67.0714285714286,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.5" />
+                    End="67.0714285714286,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2643,28 +2663,20 @@ where [refTable].[ID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="183,42"
-          Id="Package\Fact_EventLog2 Table"
-          TopLeft="19,826" />
-        <NodeLayout
-          Size="188,42"
-          Id="Package\Fact_EventLog2 Create"
-          TopLeft="21,736" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 5]"
-          TopLeft="113.25,698">
+          Id="Package.PrecedenceConstraints[Restricción 7]"
+          TopLeft="116.089285714286,90">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,38"
+              EndConnector="0,42.8214285714286"
               Start="0,0"
-              End="0,30.5">
+              End="0,35.3214285714286">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,30.5" />
+                    End="0,35.3214285714286" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2674,19 +2686,19 @@ where [refTable].[ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 6]"
-          TopLeft="112.75,778">
+          Id="Package.PrecedenceConstraints[Restricción 5]"
+          TopLeft="667,245">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48"
+              EndConnector="68.25,0"
               Start="0,0"
-              End="0,40.5">
+              End="60.75,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.5" />
+                    End="60.75,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2770,7 +2782,7 @@ where [refTable].[ID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2844,9 +2856,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2882,7 +2892,7 @@ where [refTable].[ID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2956,9 +2966,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3080,9 +3088,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3178,70 +3184,56 @@ where [refTable].[ID] = ?</property>
           Id="Package\Dim_Source Table\Dim_Source Table Write"
           TopLeft="68,199" />
         <NodeLayout
-          Size="125,42"
-          Id="Package\Dim_Source Table\Búsqueda"
-          TopLeft="94,101" />
+          Size="173,42"
+          Id="Package\Dim_Source Table\Dim_Source Lookup"
+          TopLeft="73,102" />
         <NodeLayout
           Size="167,42"
           Id="Package\Dim_Source Table\Source Table Read"
           TopLeft="80,29" />
         <EdgeLayout
           Id="Package\Dim_Source Table.Paths[Salida de origen de OLE DB]"
-          TopLeft="160,71">
+          TopLeft="161.5,71">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,30"
+              EndConnector="0,31"
               Start="0,0"
-              End="0,22.5">
+              End="0,23.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.5" />
+                    End="0,23.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Dim_Source Table.Paths[Salida de entradas no coincidentes de búsqueda]"
-          TopLeft="156.5,143">
+          TopLeft="162,144">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="8,56"
+              EndConnector="0,55"
               Start="0,0"
-              End="8,48.5">
+              End="0,47.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,24"
-                    Point2="0,28"
-                    Point3="4,28" />
-                  <mssgle:LineSegment
-                    End="4,28" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4,28"
-                    Point2="8,28"
-                    Point3="8,32" />
-                  <mssgle:LineSegment
-                    End="8,48.5" />
+                    End="0,47.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-102.8890234375,33,213.778046875,12.1953125"
+              BoundingBox="-106.8890234375,17.65234375,213.778046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -3262,12 +3254,12 @@ where [refTable].[ID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Dim_Source Table\Búsqueda">
+    design-time-name="Package\Dim_Source Table\Dim_Source Lookup">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3277,7 +3269,7 @@ where [refTable].[ID] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
