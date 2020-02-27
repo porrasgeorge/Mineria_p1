@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="65"
-  DTS:VersionGUID="{35DC15EA-8978-4654-9438-5CFAFE28673C}">
+  DTS:VersionBuild="68"
+  DTS:VersionGUID="{2C71A211-F130-429A-802E-9CF4DC3B3505}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -2405,6 +2405,22 @@ where [refTable].[ID] = ?</property>
           SQLTask:SqlStatementSource="USE ION_DW&#xA;&#xA;INSERT INTO [Fact_EventLog2]([EventLogID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;[DateID] ,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;[TranType],&#xA;&#x9;[Priority],&#xA;&#x9;[Type]) &#xA;SELECT [ID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;(select dd.ID from Dim_Dates dd WHERE convert(date, st.TimestampUTC) = [Date]) AS DateID,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;[TranType],&#xA;&#x9;[Priority],&#xA;&#x9;[Type]&#xA;FROM ION_Staging.dbo.EventLog2 st&#xA;&#x9;WHERE st.TimestampUTC BETWEEN '2015-01-01' AND '2020-12-31'&#xA;&#x9;AND SourceID IN (SELECT ID FROM Dim_Source)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Tarea de procesamiento de Analysis Services"
+      DTS:CreationName="Microsoft.DTSProcessingTask"
+      DTS:Description="Tarea de procesamiento de Analysis Services"
+      DTS:DTSID="{E2B5DB4D-C3EC-41FA-A64E-5268B87534CA}"
+      DTS:ExecutableType="Microsoft.DTSProcessingTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Tarea de procesamiento de Analysis Services"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ASProcessingData
+          ConnectionName=""
+          ProcessingCommands="" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -2487,15 +2503,15 @@ where [refTable].[ID] = ?</property>
         <NodeLayout
           Size="158,42"
           Id="Package\Create All Tables"
-          TopLeft="39.1785714285714,132.821428571429" />
+          TopLeft="38.1785714285714,132.821428571429" />
         <NodeLayout
           Size="158,42"
           Id="Package\Delete All Tables"
-          TopLeft="35,48" />
+          TopLeft="34,48" />
         <NodeLayout
           Size="161,42"
           Id="Package\Dim_Cause Table"
-          TopLeft="740.75,134.25" />
+          TopLeft="739.75,134.25" />
         <NodeLayout
           Size="171,44"
           Id="Package\Dim_CauseValue Table"
@@ -2503,7 +2519,7 @@ where [refTable].[ID] = ?</property>
         <NodeLayout
           Size="125,42"
           Id="Package\Dim_Date"
-          TopLeft="271.75,133" />
+          TopLeft="270.75,133" />
         <NodeLayout
           Size="159,42"
           Id="Package\Dim_Effect Table"
@@ -2511,18 +2527,18 @@ where [refTable].[ID] = ?</property>
         <NodeLayout
           Size="185,42"
           Id="Package\Dim_EffectValue Table"
-          TopLeft="479,277.75" />
+          TopLeft="478,277.75" />
         <NodeLayout
           Size="165,42"
           Id="Package\Dim_Source Table"
-          TopLeft="488.5,134.25" />
+          TopLeft="487.5,134.25" />
         <NodeLayout
           Size="183,42"
           Id="Package\Fact_EventLog2 Table"
-          TopLeft="734,283" />
+          TopLeft="733,283" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
-          TopLeft="396.75,154.625">
+          TopLeft="395.75,154.625">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2544,7 +2560,7 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 1]"
-          TopLeft="653.5,155.25">
+          TopLeft="652.5,155.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2566,13 +2582,13 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 2]"
-          TopLeft="821.25,176.25">
+          TopLeft="820.25,176.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-702.5,109"
+              EndConnector="-701.5,109"
               Start="0,0"
-              End="-702.5,101.5">
+              End="-701.5,101.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -2583,13 +2599,13 @@ where [refTable].[ID] = ?</property>
                     Point2="0,54.5"
                     Point3="-4,54.5" />
                   <mssgle:LineSegment
-                    End="-698.5,54.5" />
+                    End="-697.5,54.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="-698.5,54.5"
-                    Point2="-702.5,54.5"
-                    Point3="-702.5,58.5" />
+                    Point1="-697.5,54.5"
+                    Point2="-701.5,54.5"
+                    Point3="-701.5,58.5" />
                   <mssgle:LineSegment
-                    End="-702.5,101.5" />
+                    End="-701.5,101.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2604,14 +2620,14 @@ where [refTable].[ID] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="68.5,0"
+              EndConnector="67.5,0"
               Start="0,0"
-              End="61,0">
+              End="60,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="61,0" />
+                    End="60,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2644,7 +2660,7 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 4]"
-          TopLeft="197.178571428571,153.910714285714">
+          TopLeft="196.178571428571,153.910714285714">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2666,7 +2682,7 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 5]"
-          TopLeft="664,301.375">
+          TopLeft="663,301.375">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2688,7 +2704,7 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 7]"
-          TopLeft="116.089285714286,90">
+          TopLeft="115.089285714286,90">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2708,6 +2724,10 @@ where [refTable].[ID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="290,42"
+          Id="Package\Tarea de procesamiento de Analysis Services"
+          TopLeft="650,392" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
