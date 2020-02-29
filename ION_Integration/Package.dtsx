@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="68"
-  DTS:VersionGUID="{2C71A211-F130-429A-802E-9CF4DC3B3505}">
+  DTS:VersionBuild="74"
+  DTS:VersionGUID="{FB9EE593-8678-4FAD-B35C-068DA21CCE42}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -30,7 +30,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;CREATE TABLE [Dim_Source] (&#xA;    [ID] INT PRIMARY KEY,&#xA;    [Cooperative] NVARCHAR(250),&#xA;    [MeterName] NVARCHAR(250)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Cause] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_CauseValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_Effect] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_EffectValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;CREATE TABLE [Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[EventLogID] [int] NOT NULL,&#xA;&#x9;[SourceID] [int] FOREIGN KEY REFERENCES Dim_Source(ID),&#xA;&#x9;[DateID] [INT] NOT NULL,&#xA;&#x9;[CauseID] [int] FOREIGN KEY REFERENCES Dim_Cause(ID),&#xA;&#x9;[CauseValueID] [int] FOREIGN KEY REFERENCES Dim_CauseValue(ID),&#xA;&#x9;[EffectID] [int] FOREIGN KEY REFERENCES Dim_Effect(ID),&#xA;&#x9;[EffectValueID] [int] FOREIGN KEY REFERENCES Dim_EffectValue(ID),&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;CREATE TABLE [Dim_Source] (&#xA;    [ID] INT PRIMARY KEY,&#xA;    [Cooperative] NVARCHAR(250),&#xA;    [MeterName] NVARCHAR(250)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Cause] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_CauseValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_Effect] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_EffectValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;CREATE TABLE [Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[EventLogID] [int] NOT NULL,&#xA;&#x9;[SourceID] [int] FOREIGN KEY REFERENCES Dim_Source(ID),&#xA;&#x9;[DateID] [INT] FOREIGN KEY REFERENCES Dim_Dates(ID),&#xA;&#x9;[CauseID] [int] FOREIGN KEY REFERENCES Dim_Cause(ID),&#xA;&#x9;[CauseValueID] [int] FOREIGN KEY REFERENCES Dim_CauseValue(ID),&#xA;&#x9;[EffectID] [int] FOREIGN KEY REFERENCES Dim_Effect(ID),&#xA;&#x9;[EffectValueID] [int] FOREIGN KEY REFERENCES Dim_EffectValue(ID),&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -90,7 +90,7 @@
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT es.[ID]
       ,left([String], 200) as Name
-      ,left(q.Name, 200) as QuantityName
+      ,left(IIF(CHARINDEX(' ', es.[String]) = 0, es.[String], IIF(LEFT(es.[String], 3) = 'BIN', 'BIN', LEFT(es.[String],CHARINDEX(' ', es.[String])))), 200) as QuantityName
   FROM [ION_Staging].[dbo].[EventString] es
   LEFT JOIN [ION_Staging].[dbo].[Quantity] q ON q.ID = es.QuantityID
   WHERE es.ID IN (SELECT DISTINCT CauseID FROM ION_Staging.dbo.EventLog2)
@@ -552,7 +552,7 @@ where [refTable].[ID] = ?</property>
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT es.[ID]
       ,left([String], 200) as Name
-      ,left(q.Name, 200) as QuantityName
+      ,left(IIF(CHARINDEX(' ', es.[String]) = 0, es.[String], IIF(LEFT(es.[String], 3) = 'BIN', 'BIN', LEFT(es.[String],CHARINDEX(' ', es.[String])))), 200) as QuantityName
   FROM [ION_Staging].[dbo].[EventString] es
   LEFT JOIN [ION_Staging].[dbo].[Quantity] q ON q.ID = es.QuantityID
   WHERE es.ID IN (SELECT DISTINCT CauseValueID FROM ION_Staging.dbo.EventLog2)
@@ -1308,7 +1308,7 @@ where [refTable].[ID] = ?</property>
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT es.[ID]
       ,left([String], 200) as Name
-      ,left(q.Name, 200) as QuantityName
+      ,left(IIF(CHARINDEX(' ', es.[String]) = 0, es.[String], IIF(LEFT(es.[String], 3) = 'BIN', 'BIN', LEFT(es.[String],CHARINDEX(' ', es.[String])))), 200) as QuantityName
   FROM [ION_Staging].[dbo].[EventString] es
   LEFT JOIN [ION_Staging].[dbo].[Quantity] q ON q.ID = es.QuantityID
   WHERE es.ID IN (SELECT DISTINCT EffectID FROM ION_Staging.dbo.EventLog2)
@@ -1770,7 +1770,7 @@ where [refTable].[ID] = ?</property>
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT es.[ID]
       ,left([String], 200) as Name
-      ,left(q.Name, 200) as QuantityName
+      ,left(IIF(CHARINDEX(' ', es.[String]) = 0, es.[String], IIF(LEFT(es.[String], 3) = 'BIN', 'BIN', LEFT(es.[String],CHARINDEX(' ', es.[String])))), 200) as QuantityName
   FROM [ION_Staging].[dbo].[EventString] es
   LEFT JOIN [ION_Staging].[dbo].[Quantity] q ON q.ID = es.QuantityID
   WHERE es.ID IN (SELECT DISTINCT EffectValueID FROM ION_Staging.dbo.EventLog2)
@@ -2409,11 +2409,12 @@ where [refTable].[ID] = ?</property>
       DTS:refId="Package\Tarea de procesamiento de Analysis Services"
       DTS:CreationName="Microsoft.DTSProcessingTask"
       DTS:Description="Tarea de procesamiento de Analysis Services"
+      DTS:Disabled="True"
       DTS:DTSID="{E2B5DB4D-C3EC-41FA-A64E-5268B87534CA}"
       DTS:ExecutableType="Microsoft.DTSProcessingTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Tarea de procesamiento de Analysis Services"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <ASProcessingData
@@ -2480,6 +2481,14 @@ where [refTable].[ID] = ?</property>
       DTS:ObjectName="Restricción 5"
       DTS:To="Package\Fact_EventLog2 Table" />
     <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{ECCAAF62-D57C-4FFD-9032-508525E05479}"
+      DTS:From="Package\Fact_EventLog2 Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 6"
+      DTS:To="Package\Tarea de procesamiento de Analysis Services" />
+    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 7]"
       DTS:CreationName=""
       DTS:DTSID="{EF102010-BDB9-4CBA-B64D-4ABAD1FF0336}"
@@ -2536,6 +2545,10 @@ where [refTable].[ID] = ?</property>
           Size="183,42"
           Id="Package\Fact_EventLog2 Table"
           TopLeft="733,283" />
+        <NodeLayout
+          Size="290,42"
+          Id="Package\Tarea de procesamiento de Analysis Services"
+          TopLeft="24,492" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
           TopLeft="395.75,154.625">
@@ -2724,10 +2737,40 @@ where [refTable].[ID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="290,42"
-          Id="Package\Tarea de procesamiento de Analysis Services"
-          TopLeft="650,392" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 6]"
+          TopLeft="824.5,325">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-655.5,167"
+              Start="0,0"
+              End="-655.5,159.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,79.5"
+                    Point2="0,83.5"
+                    Point3="-4,83.5" />
+                  <mssgle:LineSegment
+                    End="-651.5,83.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-651.5,83.5"
+                    Point2="-655.5,83.5"
+                    Point3="-655.5,87.5" />
+                  <mssgle:LineSegment
+                    End="-655.5,159.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -2767,9 +2810,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-18.84447265625,28.35107421875,37.6889453125,9.7978515625"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2792,7 +2833,7 @@ where [refTable].[ID] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-130.82240234375,33.15234375,261.6448046875,12.1953125"
+              BoundingBox="-106.8890234375,33.15234375,213.778046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2879,9 +2920,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2991,9 +3030,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3115,9 +3152,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3239,9 +3274,7 @@ where [refTable].[ID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
