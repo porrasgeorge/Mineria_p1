@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="74"
-  DTS:VersionGUID="{FB9EE593-8678-4FAD-B35C-068DA21CCE42}">
+  DTS:VersionBuild="85"
+  DTS:VersionGUID="{1E060A86-3C46-4146-9ADA-60A34BF250F8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -30,7 +30,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;CREATE TABLE [Dim_Source] (&#xA;    [ID] INT PRIMARY KEY,&#xA;    [Cooperative] NVARCHAR(250),&#xA;    [MeterName] NVARCHAR(250)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Cause] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_CauseValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_Effect] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_EffectValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;CREATE TABLE [Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[EventLogID] [int] NOT NULL,&#xA;&#x9;[SourceID] [int] FOREIGN KEY REFERENCES Dim_Source(ID),&#xA;&#x9;[DateID] [INT] FOREIGN KEY REFERENCES Dim_Dates(ID),&#xA;&#x9;[CauseID] [int] FOREIGN KEY REFERENCES Dim_Cause(ID),&#xA;&#x9;[CauseValueID] [int] FOREIGN KEY REFERENCES Dim_CauseValue(ID),&#xA;&#x9;[EffectID] [int] FOREIGN KEY REFERENCES Dim_Effect(ID),&#xA;&#x9;[EffectValueID] [int] FOREIGN KEY REFERENCES Dim_EffectValue(ID),&#xA;&#x9;[TranType] [tinyint] NULL,&#xA;&#x9;[Priority] [tinyint] NULL,&#xA;&#x9;[Type] [tinyint] NULL,&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;&#xA;CREATE TABLE Dim_Dates(&#xA;&#x9;[ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[Date] DATE,&#xA;&#x9;[Year] INT,&#xA;&#x9;[Month] INT,&#xA;&#x9;[Day] INT,&#xA;&#x9;[MonthName] VARCHAR(15),&#xA;&#x9;[DayName] VARCHAR(15)&#xA;);&#xA;&#xA;CREATE TABLE [Dim_Source] (&#xA;    [ID] INT PRIMARY KEY,&#xA;    [Cooperative] NVARCHAR(250),&#xA;    [MeterName] NVARCHAR(250)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Cause] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_CauseValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_Effect] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;&#xA;CREATE TABLE [Dim_EffectValue] (&#xA;    [ID]  INT PRIMARY KEY,&#xA;    [Name] NVARCHAR(200),&#xA;    [QuantityName] NVARCHAR(200)&#xA;)&#xA;&#xA;CREATE TABLE [Dim_Priority] (&#xA;    [ID] INT IDENTITY(1,1) PRIMARY KEY,&#xA;    [Priority] NVARCHAR(50)&#xA;)&#xA;&#xA;CREATE TABLE [Fact_EventLog2](&#xA;&#x9;[ID] [int] IDENTITY(1,1) PRIMARY KEY,&#xA;&#x9;[EventLogID] [int] NOT NULL,&#xA;&#x9;[SourceID] [int] FOREIGN KEY REFERENCES Dim_Source(ID),&#xA;&#x9;[DateID] [INT] FOREIGN KEY REFERENCES Dim_Dates(ID),&#xA;&#x9;[CauseID] [int] FOREIGN KEY REFERENCES Dim_Cause(ID),&#xA;&#x9;[CauseValueID] [int] FOREIGN KEY REFERENCES Dim_CauseValue(ID),&#xA;&#x9;[EffectID] [int] FOREIGN KEY REFERENCES Dim_Effect(ID),&#xA;&#x9;[EffectValueID] [int] FOREIGN KEY REFERENCES Dim_EffectValue(ID),&#xA;&#x9;[PriorityID] [int] FOREIGN KEY REFERENCES Dim_Priority(ID),&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -46,7 +46,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS [ION_DW].dbo.[Fact_EventLog2];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Dates];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Cause];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_CauseValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Effect];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_EffectValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Source];&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS [ION_DW].dbo.[Fact_EventLog2];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Dates];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Cause];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_CauseValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Effect];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_EffectValue];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Source];&#xA;DROP TABLE IF EXISTS [ION_DW].dbo.[Dim_Priority];&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1914,6 +1914,22 @@ where [refTable].[ID] = ?</property>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Dim_Priority Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{8cdf7911-6e50-417b-af3d-cf23d7ea35cb}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Dim_Priority Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
+          SQLTask:SqlStatementSource="USE [ION_DW]&#xA;GO&#xA;&#xA;INSERT INTO [dbo].[Dim_Priority]([Priority]) VALUES('Low')&#xA;INSERT INTO [dbo].[Dim_Priority]([Priority]) VALUES('Medium')&#xA;INSERT INTO [dbo].[Dim_Priority]([Priority]) VALUES('High')" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Dim_Source Table"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Tarea Flujo de datos"
@@ -2402,7 +2418,7 @@ where [refTable].[ID] = ?</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{6DECC6D3-8945-4EA4-9A45-D197F31095AB}"
-          SQLTask:SqlStatementSource="USE ION_DW&#xA;&#xA;INSERT INTO [Fact_EventLog2]([EventLogID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;[DateID] ,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;[TranType],&#xA;&#x9;[Priority],&#xA;&#x9;[Type]) &#xA;SELECT [ID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;(select dd.ID from Dim_Dates dd WHERE convert(date, st.TimestampUTC) = [Date]) AS DateID,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;[TranType],&#xA;&#x9;[Priority],&#xA;&#x9;[Type]&#xA;FROM ION_Staging.dbo.EventLog2 st&#xA;&#x9;WHERE st.TimestampUTC BETWEEN '2015-01-01' AND '2020-12-31'&#xA;&#x9;AND SourceID IN (SELECT ID FROM Dim_Source)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="USE ION_DW&#xA;&#xA;INSERT INTO [Fact_EventLog2]([EventLogID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;[DateID] ,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;[PriorityID])&#xA;SELECT [ID],&#xA;&#x9;[SourceID] ,&#xA;&#x9;(select dd.ID from Dim_Dates dd WHERE convert(date, st.TimestampUTC) = [Date]) AS DateID,&#xA;&#x9;[CauseID] ,&#xA;&#x9;[CauseValueID],&#xA;&#x9;[EffectID],&#xA;&#x9;[EffectValueID],&#xA;&#x9;IIF([Priority] &lt; 100, 1, IIF([Priority] &lt; 200, 2, 3)) as Priority&#xA;FROM ION_Staging.dbo.EventLog2 st&#xA;&#x9;WHERE st.TimestampUTC BETWEEN '2015-01-01' AND '2020-12-31'&#xA;&#x9;AND SourceID IN (SELECT ID FROM Dim_Source)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -2475,11 +2491,11 @@ where [refTable].[ID] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 5]"
       DTS:CreationName=""
-      DTS:DTSID="{E42F686B-E16F-44F2-958E-C64C2C434D18}"
+      DTS:DTSID="{03AD0CEC-24DA-41D5-8F96-5F81B6C57C23}"
       DTS:From="Package\Dim_EffectValue Table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 5"
-      DTS:To="Package\Fact_EventLog2 Table" />
+      DTS:To="Package\Dim_Priority Table" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 6]"
       DTS:CreationName=""
@@ -2496,6 +2512,14 @@ where [refTable].[ID] = ?</property>
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 7"
       DTS:To="Package\Create All Tables" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{8219107B-2CD4-4522-ADC0-C9F781D01C8E}"
+      DTS:From="Package\Dim_Priority Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 8"
+      DTS:To="Package\Fact_EventLog2 Table" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
@@ -2509,10 +2533,6 @@ where [refTable].[ID] = ?</property>
     <LayoutInfo>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Create All Tables"
-          TopLeft="38.1785714285714,132.821428571429" />
         <NodeLayout
           Size="158,42"
           Id="Package\Delete All Tables"
@@ -2544,11 +2564,11 @@ where [refTable].[ID] = ?</property>
         <NodeLayout
           Size="183,42"
           Id="Package\Fact_EventLog2 Table"
-          TopLeft="733,283" />
+          TopLeft="45,431" />
         <NodeLayout
           Size="290,42"
           Id="Package\Tarea de procesamiento de Analysis Services"
-          TopLeft="24,492" />
+          TopLeft="614,424" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
           TopLeft="395.75,154.625">
@@ -2694,28 +2714,6 @@ where [refTable].[ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 5]"
-          TopLeft="663,301.375">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="70,0"
-              Start="0,0"
-              End="62.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="62.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 7]"
           TopLeft="115.089285714286,90">
           <EdgeLayout.Curve>
@@ -2739,30 +2737,82 @@ where [refTable].[ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 6]"
-          TopLeft="824.5,325">
+          TopLeft="228,448.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-655.5,167"
+              EndConnector="386,0"
               Start="0,0"
-              End="-655.5,159.5">
+              End="378.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,79.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,79.5"
-                    Point2="0,83.5"
-                    Point3="-4,83.5" />
+                    End="378.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Dim_Priority Table"
+          TopLeft="736,278" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Create All Tables"
+          TopLeft="38.1785714285714,132.821428571429" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 5]"
+          TopLeft="663,298.875">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73,0"
+              Start="0,0"
+              End="65.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-651.5,83.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-651.5,83.5"
-                    Point2="-655.5,83.5"
-                    Point3="-655.5,87.5" />
+                    End="65.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 8]"
+          TopLeft="819,320">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-682.5,111"
+              Start="0,0"
+              End="-682.5,103.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-655.5,159.5" />
+                    End="0,51.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.5"
+                    Point2="0,55.5"
+                    Point3="-4,55.5" />
+                  <mssgle:LineSegment
+                    End="-678.5,55.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-678.5,55.5"
+                    Point2="-682.5,55.5"
+                    Point3="-682.5,59.5" />
+                  <mssgle:LineSegment
+                    End="-682.5,103.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
