@@ -1,0 +1,48 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="FlatFile CSV"
+  DTS:DTSID="{B7070829-D4C8-45C3-B596-2851A8BCE88D}"
+  DTS:CreationName="FLATFILE">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:Format="Delimited"
+      DTS:LocaleID="3082"
+      DTS:Unicode="True"
+      DTS:HeaderRowDelimiter="_x000D__x000A_"
+      DTS:ColumnNamesInFirstDataRow="True"
+      DTS:RowDelimiter=""
+      DTS:TextQualifier="_x003C_none_x003E_"
+      DTS:CodePage="1252"
+      DTS:ConnectionString="C:\Proyecto01\ION_Integration\Source.csv">
+      <DTS:FlatFileColumns>
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x002C_"
+          DTS:MaximumWidth="50"
+          DTS:DataType="130"
+          DTS:TextQualified="True"
+          DTS:ObjectName="ID"
+          DTS:DTSID="{BAAC5A45-7EC8-4C7B-A38A-5CEC4E402272}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x002C_"
+          DTS:MaximumWidth="50"
+          DTS:DataType="130"
+          DTS:TextQualified="True"
+          DTS:ObjectName="Cooperative"
+          DTS:DTSID="{DDE4573B-6D55-46C1-B771-948B70B2F676}"
+          DTS:CreationName="" />
+        <DTS:FlatFileColumn
+          DTS:ColumnType="Delimited"
+          DTS:ColumnDelimiter="_x000D__x000A_"
+          DTS:MaximumWidth="50"
+          DTS:DataType="130"
+          DTS:TextQualified="True"
+          DTS:ObjectName="MeterName"
+          DTS:DTSID="{8F454273-BA90-42DB-B1CC-7F0496003313}"
+          DTS:CreationName="" />
+      </DTS:FlatFileColumns>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
